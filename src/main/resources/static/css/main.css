@@ -306,6 +306,32 @@ span.time {
 li.chat-message.me {
     background-color: #dcf8c6;
 }
+li.chat-message.other{
+	background-color: #fff;
+}
 #chat-page ul li {
-    margin: 2px;
+    margin: 5px;
+}
+li.chat-message.me:after,li.chat-message.other:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0px;
+    bottom: auto;
+    border: 22px solid;
+    border-top-color: currentcolor;
+    border-right-color: currentcolor;
+    border-bottom-color: currentcolor;
+    border-left-color: currentcolor;
+}
+li.chat-message.me:after{
+    left: -20px;
+    right: auto;
+    border-color: #dcf8c6 transparent transparent transparent;
+}
+li.chat-message.other:after {
+    right: -20px;
+    left: auto;
+    border-color: #ffffff transparent transparent transparent;
 }
