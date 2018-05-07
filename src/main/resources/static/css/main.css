@@ -158,6 +158,7 @@ button.accent {
     overflow-y: scroll;
     padding: 0 20px 0px 20px;
     height: calc(100% - 150px);
+    background-image: url('/image/background-image.png');
 }
 
 #chat-page #messageForm {
@@ -304,4 +305,7 @@ span.time {
 }
 li.chat-message.me {
     background-color: #dcf8c6;
+}
+#chat-page ul li {
+    margin: 2px;
 }

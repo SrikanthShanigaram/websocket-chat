@@ -76,13 +76,13 @@ function onMessageReceived(payload) {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
         if(username!=message.sender){
-        	notifyMe(message.content,'');
+        	notifyMe(message.content,'',message.sender);
         }
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
         if(username!=message.sender){
-        	notifyMe(message.content,'');
+        	notifyMe(message.content,'',message.sender);
         }
     } else {
         messageElement.classList.add('chat-message');
@@ -100,7 +100,7 @@ function onMessageReceived(payload) {
         messageElement.appendChild(usernameElement);
         messageElement.classList.add(username==message.sender?'me':'other');
         if(username!=message.sender){
-        	notifyMe('You have a message from '+message.sender,message.content);
+        	notifyMe('You have a message from '+message.sender,message.content,message.sender);
         }
     }
     var timerElement = document.createElement('span');
@@ -132,26 +132,25 @@ function getAvatarColor(messageSender) {
 function getRandomNumber(){
 	return Math.ceil(Math.random()*10000);
 }
-function notifyMe(title,body) {
+function notifyMe(title,body,sender) {
 	if (Notification.permission !== "granted")
 		Notification.requestPermission();
 	else {
 		var notification = new Notification(
 				title,
 				{
-					icon : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
+					icon : createSvgAndGetImageData(sender),
 					body : body,
 				});
 
-		notification.onclick = function() {
+		/*notification.onclick = function() {
 			window.open("http://stackoverflow.com/a/13328397/1269037");
-		};
+		};*/
 
 	}
 
 }
-document
-		.addEventListener(
+document.addEventListener(
 				'DOMContentLoaded',
 				function() {
 					if (!Notification) {
@@ -161,5 +160,33 @@ document
 					if (Notification.permission !== "granted")
 						Notification.requestPermission();
 				});
+function createSvgAndGetImageData(sender){
+	var color = getAvatarColor(sender);
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('xlink','http://www.w3.org/1999/xlink');
+	svg.setAttribute('width','150');
+	svg.setAttribute('height','150');
+	
+	var rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+	rect.setAttribute('width','150');
+	rect.setAttribute('height','150');
+	rect.setAttribute('fill',color);
+	rect.setAttribute('stroke',color);
+	rect.setAttribute('stroke-width','0');
+	rect.setAttribute('rx','100');
+	
+	var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+	text.setAttribute('x', '50');
+	text.setAttribute('y', '95');
+	text.setAttribute('fill', '#fff');
+	text.setAttribute('font-weight','bold');
+	text.setAttribute('font-size','5em');
+	text.textContent = sender[0];
+	
+	svg.appendChild(rect);
+	svg.appendChild(text); 
+	var s = new XMLSerializer().serializeToString(svg);
+	return 'data:image/svg+xml;base64, '+window.btoa(s);
+}
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)
