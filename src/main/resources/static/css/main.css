@@ -155,12 +155,12 @@ button.accent {
     background-color: #FFF;
     margin: 0;
     overflow: auto;
-    overflow-y: scroll;
     padding: 0 20px 0px 20px;
     height: calc(100% - 150px);
-    background-image: url('/image/background-image.png');
 }
-
+#chat-page #messageArea{
+	background-image: url('/image/background-image.png');
+}
 #chat-page #messageForm {
     padding: 20px;
 }
@@ -214,7 +214,6 @@ button.accent {
     color: #333;
     font-weight: 600;
 }
-
 #chat-page .chat-message p {
     color: #43464b;
     white-space: normal;
@@ -264,6 +263,9 @@ button.accent {
 }
 
 @media screen and (max-width: 480px) {
+	span.time {
+    	font-size: 9px;
+	}
     .chat-container {
         height: calc(100% - 30px);
     }
@@ -334,4 +336,94 @@ li.chat-message.other:after {
     right: -20px;
     left: auto;
     border-color: #ffffff transparent transparent transparent;
+}
+ul#userArea {
+    width: 30%;
+    float: left;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: hidden;
+}
+
+/* Loader animation */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+  background: black;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: #008000;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: blueviolet;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+  background: blue;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+/* loader animation end */
+
+#userArea li {
+    cursor: pointer;
+}
+.selected {
+    background-color: #97c1e2;
+    position:relative;
+}
+.selected:after{
+	border: solid 10px transparent;
+    border-right-color: #fff;
+    position: absolute;
+    margin: -85px 0 0 -20px;
+}
+.selected .mark {
+    border: solid 10px transparent;
+    border-left-color: #97c1e2;
+    position: absolute;
+    content: ' ';
+    right: -15px;
 }

@@ -10,6 +10,7 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
+var user;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -20,9 +21,10 @@ function connect(event) {
     username = document.querySelector('#name').value.trim();
 
     if(username) {
+    	var userId=Math.ceil(Math.random()*10000);
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
-
+        user = new User(userId,username);
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
@@ -34,12 +36,13 @@ function connect(event) {
 
 function onConnected() {
     // Subscribe to the Public Topic
+    stompClient.subscribe('/topic/'+user.userId, onMessageReceived);
     stompClient.subscribe('/topic/public', onMessageReceived);
 
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
         {},
-        JSON.stringify({sender: username, type: 'JOIN', messageDate:new Date()})
+        JSON.stringify({user: user, type: 'JOIN', messageDate:new Date()})
     )
 
     connectingElement.classList.add('hidden');
@@ -53,16 +56,21 @@ function onError(error) {
 
 
 function sendMessage(event) {
+	if($('.selected').length==0){
+		event.preventDefault();
+		return;
+	}
     var messageContent = messageInput.value.trim();
     if(messageContent && stompClient) {
         var chatMessage = {
-            sender: username,
+            user: user,
             content: messageInput.value,
             type: 'CHAT',
             messageDate:new Date()
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/topic/"+$('.selected').attr('id'), {}, JSON.stringify(chatMessage));
         messageInput.value = '';
+        processMessage(chatMessage);
     }
     event.preventDefault();
 }
@@ -70,37 +78,45 @@ function sendMessage(event) {
 
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
-    var messageElement = document.createElement('li');
+    processMessage(message);
+}
 
+function processMessage(message){
+	var messageElement = document.createElement('li');
+    var currentUserId =  user.userId;
+    var messageUserId = message.user.userId;
+    var messageUserName = message.user.userName;
     if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-        if(username!=message.sender){
-        	notifyMe(message.content,'',message.sender);
+        message.content = messageUserName + ' joined!';
+        if(currentUserId!=messageUserId){
+        	notifyMe(message.content,'',messageUserName);
         }
+        fillUsers();
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
-        if(username!=message.sender){
-        	notifyMe(message.content,'',message.sender);
+        message.content = messageUserName + ' left!';
+        if(currentUserId!=messageUserId){
+        	notifyMe(message.content,'',messageUserName);
         }
+        $('#'+messageUserId).remove();
     } else {
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(message.sender[0]);
+        var avatarText = document.createTextNode(messageUserName[0]);
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+        avatarElement.style['background-color'] = getAvatarColor(messageUserName);
 
         messageElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(username==message.sender?'You':message.sender);
+        var usernameText = document.createTextNode(currentUserId==messageUserId?'You':messageUserName);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
-        messageElement.classList.add(username==message.sender?'me':'other');
-        if(username!=message.sender){
-        	notifyMe('You have a message from '+message.sender,message.content,message.sender);
+        messageElement.classList.add(currentUserId==messageUserId?'me':'other');
+        if(currentUserId!=messageUserId){
+        	notifyMe('You have a message from '+messageUserName,message.content,messageUserName);
         }
     }
     var timerElement = document.createElement('span');
@@ -116,10 +132,8 @@ function onMessageReceived(payload) {
 
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
-    
     formatTime();
 }
-
 
 function getAvatarColor(messageSender) {
     var hash = 0;
@@ -129,9 +143,6 @@ function getAvatarColor(messageSender) {
     var index = Math.abs(hash % colors.length);
     return colors[index];
 }
-function getRandomNumber(){
-	return Math.ceil(Math.random()*10000);
-}
 function notifyMe(title,body,sender) {
 	if (Notification.permission !== "granted")
 		Notification.requestPermission();
@@ -139,7 +150,7 @@ function notifyMe(title,body,sender) {
 		var notification = new Notification(
 				title,
 				{
-					icon : createSvgAndGetImageData(sender),
+					icon : '',//createSvgAndGetImageData(sender),
 					body : body,
 				});
 
@@ -188,5 +199,24 @@ function createSvgAndGetImageData(sender){
 	var s = new XMLSerializer().serializeToString(svg);
 	return 'data:image/svg+xml;base64, '+window.btoa(s);
 }
+function fillUsers(){
+	$.ajax({
+		url:'get-users',
+		success : function(result){
+			$('.loader').remove();
+			for(var i in result){
+				var uInfo = result[i];
+				if(user.userId!=uInfo.userId){
+					$('#userArea').append('<li id='+uInfo.userId+'>'+uInfo.userName+'<span class="mark"></span></li>');
+				}
+			}
+		}
+	});
+}
+function selectAndSubscribe(){
+	$("#userArea li").removeClass('selected');
+    $(this).addClass('selected');
+}
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)
+$('#userArea').on('click','li',selectAndSubscribe);

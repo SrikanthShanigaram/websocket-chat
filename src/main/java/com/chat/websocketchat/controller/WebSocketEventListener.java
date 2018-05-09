@@ -13,6 +13,7 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.chat.websocketchat.model.ChatMessage;
+import com.chat.websocketchat.model.User;
 
 @Component
 public class WebSocketEventListener {
@@ -31,13 +32,13 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if(username != null) {
-            logger.info("User Disconnected : " + username);
-
+        User user = (User) headerAccessor.getSessionAttributes().get("user");
+        if(user != null) {
+            logger.info("User Disconnected : " + user);
+            ChatController.users.remove(user);
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setType(ChatMessage.MessageType.LEAVE);
-            chatMessage.setSender(username);
+            chatMessage.setUser(user);
             chatMessage.setMessageDate(new Date());
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }

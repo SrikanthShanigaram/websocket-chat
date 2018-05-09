@@ -5,7 +5,7 @@ import java.util.Date;
 public class ChatMessage {
     private MessageType type;
     private String content;
-    private String sender;
+    private User user;
     private Date messageDate;
 
     public enum MessageType {
@@ -30,13 +30,13 @@ public class ChatMessage {
         this.content = content;
     }
 
-    public String getSender() {
-        return sender;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Date getMessageDate() {
 		return messageDate;
