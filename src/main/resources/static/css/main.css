@@ -6,7 +6,6 @@
 
 html,body {
     height: 100%;
-    overflow: hidden;
 }
 
 body {
@@ -223,6 +222,8 @@ button.accent {
 #messageForm .input-group input {
     float: left;
     width: calc(100% - 85px);
+    margin-left: 40px;
+    width: 93% !important;
 }
 
 #messageForm .input-group button {
@@ -260,6 +261,12 @@ button.accent {
         margin-right: 10px;
         margin-top: 10px;
     }
+    .emojiPickerIconWrap{
+    	width: 75% !important;
+    }
+    .emojiPicker {
+   		 left: 0 !important;
+	}
 }
 
 @media screen and (max-width: 480px) {
@@ -426,4 +433,16 @@ ul#userArea {
     position: absolute;
     content: ' ';
     right: -15px;
+}
+
+/* Emoji css */
+.emojiPickerIconWrap{
+	float: left;
+}
+.emojiPickerIcon{
+	right: auto !important;
+}
+.emojiPickerIconWrap{
+	display:block !important;
+	width:87%;
 }
