@@ -1,16 +1,23 @@
 package com.chat.websocketchat.model;
 
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
+@Builder
 @Document
 public class User {
 
-	private long userId;
+	private String userId;
 	private String userName;
-	public long getUserId() {
+	private String password;
+	private Role role;
+	
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getUserName() {
@@ -18,6 +25,19 @@ public class User {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	@Override
 	public int hashCode() {
@@ -41,6 +61,5 @@ public class User {
 		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
-	}
-	
+	}	
 }

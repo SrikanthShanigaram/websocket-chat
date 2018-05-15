@@ -6,4 +6,5 @@ import com.chat.websocketchat.model.User;
 
 public interface UserRepository extends MongoRepository<User, String>     {
 	
+	public User findByUserName(String userName);
 }
