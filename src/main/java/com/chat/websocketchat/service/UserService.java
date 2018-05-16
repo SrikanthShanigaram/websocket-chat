@@ -18,4 +18,8 @@ public class UserService {
 		return Optional.ofNullable(repository.findByUserName(userName));
 	}
 	
+	public void saveUser(User user) {
+		repository.save(user);
+	}
+	
 }

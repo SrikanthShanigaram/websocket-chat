@@ -20,18 +20,18 @@
             <h1 class="title">Login in to your account</h1>
             <form id="usernameForm" name="usernameForm" action="${contextPath}/login" method="post">
                 <div class="form-group">
-                    <input type="text" id="name" placeholder="Username" class="form-control" />
+                    <input type="text" id="name" name="username" placeholder="Username" class="form-control" />
                 </div>
                  <div class="form-group">
-                    <input type="password" id="password" placeholder="Password" class="form-control" />
+                    <input type="password" id="password" name="password" placeholder="Password" class="form-control" />
                 </div>
-                <span>${msg}</span> d
-                <span>${errorMsg}</span> d
-                ${error} 
+                <span>${errorMsg}</span>
                 <div class="form-group">
                     <button type="submit" class="accent username-submit">Login</button>
                     <a href="/register">Register</a>
                 </div>
+                <input type="hidden" name="${_csrf.parameterName}"
+               value="${_csrf.token}" />
             </form>
         </div>
     </div>

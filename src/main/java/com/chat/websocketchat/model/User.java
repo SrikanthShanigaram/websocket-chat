@@ -1,12 +1,13 @@
 package com.chat.websocketchat.model;
 
-import lombok.Builder;
-import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Builder
+import lombok.ToString;
+
+//@Data
+//@Builder
 @Document
+@ToString
 public class User {
 
 	private String userId;
