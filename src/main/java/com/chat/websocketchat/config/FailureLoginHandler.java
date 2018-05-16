@@ -13,7 +13,6 @@ public class FailureLoginHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest arg0, HttpServletResponse arg1,
 			org.springframework.security.core.AuthenticationException arg2) throws IOException, ServletException {
-		System.out.println(arg2.getMessage());
 		arg1.sendRedirect("/status?error="+arg2.getMessage());
 	}
 }

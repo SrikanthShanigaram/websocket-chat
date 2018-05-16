@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/login")
 	public String login(Model model, String error, String logout) {
@@ -36,8 +40,6 @@ public class UserController {
 	public String status(Model model, String error, String logout) {
 		if (error != null)
             model.addAttribute("error", error);
-
-
         return "status";
 	}
 	@GetMapping("/register")
@@ -48,14 +50,9 @@ public class UserController {
 	}
 	@PostMapping("/register")
 	public ModelAndView processRegistration(ModelAndView modelAndView, @ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request) {
-		System.out.println("=============Hi inside post register===========");
-		System.out.println(user);
-		System.out.println(modelAndView);
-		System.out.println(bindingResult);
-		// Lookup user in database by e-mail
 		user = new User();
 		user.setUserName(request.getParameter("userName"));
-		user.setPassword(request.getParameter("password"));
+		user.setPassword(passwordEncoder.encode(request.getParameter("password")));
 		user.setUserId(RandomUtils.nextInt()+"");
 		user.setRole(Role.USER);
 		User userExists = userService.getUser(user.getUserName()).orElse(null);

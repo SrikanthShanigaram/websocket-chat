@@ -10,7 +10,7 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
-var user;
+
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -21,10 +21,8 @@ function connect(event) {
     username = document.querySelector('#name').value.trim();
 
     if(username) {
-    	var userId=Math.ceil(Math.random()*10000);
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
-        user = new User(userId,username);
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
@@ -222,6 +220,6 @@ function selectAndSubscribe(){
 	$("#userArea li").removeClass('selected');
     $(this).addClass('selected');
 }
-usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', sendMessage, true)
+//usernameForm.addEventListener('submit', connect, true);
+messageForm.addEventListener('submit', sendMessage, true);
 $('#userArea').on('click','li',selectAndSubscribe);

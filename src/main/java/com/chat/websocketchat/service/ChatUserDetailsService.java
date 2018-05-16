@@ -17,17 +17,14 @@ public class ChatUserDetailsService implements UserDetailsService {
 	
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-    	System.out.println("============inside userdetail service=========");
     	User user = userService.getUser(userName)
     			.orElseThrow(() -> new UsernameNotFoundException(String.format("User with userName=%s was not found", userName)));
-    	System.out.println(user+" in service");
-        //return new UserDetail(user);
-    	org.springframework.security.core.userdetails.User u=  new org.springframework.security.core.userdetails.User(
+        return new UserDetail(user);
+    	/*org.springframework.security.core.userdetails.User u=  new org.springframework.security.core.userdetails.User(
     	        user.getUserName(), 
     	        user.getPassword(), // shall to be the already BCrypt-encrypted password
     	        AuthorityUtils.createAuthorityList(user.getRole().toString()));
-    	System.out.println(u.getPassword()+" :::: encoded");
-    	return u;
+    	return u;*/
     }
 
 }

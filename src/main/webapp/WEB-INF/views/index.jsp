@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="user" property="principal" />
 <html>
   <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -15,7 +17,7 @@
     <div id="chat-page">
         <div class="chat-container">
             <div class="chat-header">
-                <h2>Spring WebSocket Chat Demo</h2>
+                <h2>${user.userName}</h2>
             </div>
             <div class="connecting">
                 Connecting...
@@ -47,5 +49,9 @@
     <script src="/js/user.js"></script>
     <script type="text/javascript" src="/js/emojipicker.js"></script>
     <script type="text/javascript" src="/js/emojis.js"></script>
+    <script>
+    var user = new User(${user.id},${user.userName});
+    console.log(user);
+    </script>
   </body>
 </html>

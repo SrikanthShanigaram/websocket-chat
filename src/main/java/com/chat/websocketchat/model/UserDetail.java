@@ -22,6 +22,10 @@ public class UserDetail extends org.springframework.security.core.userdetails.Us
     public Role getRole() {
         return user.getRole();
     }
+    
+    public String getUserName() {
+        return user.getUserName();
+    }
 
     @Override
     public String toString() {
