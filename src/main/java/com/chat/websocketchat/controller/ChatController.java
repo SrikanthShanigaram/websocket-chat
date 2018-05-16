@@ -42,7 +42,9 @@ public class ChatController {
         // Add username in web socket session
     	System.out.println("===========");
         headerAccessor.getSessionAttributes().put("user", chatMessage.getUser());
-        users.add(chatMessage.getUser());
+        if(!users.contains(chatMessage.getUser())) {
+        	users.add(chatMessage.getUser());
+        }
         return chatMessage;
     }
     

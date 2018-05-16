@@ -35,6 +35,11 @@ function connect(event) {
 
 
 function onConnected() {
+	$('#message').emojiPicker({
+		  height: '300px',
+		  width:  '450px',
+		  top : '0px'
+	});
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/'+user.userId, onMessageReceived);
     stompClient.subscribe('/topic/public', onMessageReceived);
@@ -44,7 +49,6 @@ function onConnected() {
         {},
         JSON.stringify({user: user, type: 'JOIN', messageDate:new Date()})
     )
-
     connectingElement.classList.add('hidden');
 }
 
@@ -204,6 +208,7 @@ function fillUsers(){
 		url:'get-users',
 		success : function(result){
 			$('.loader').remove();
+			$('#userArea').children().remove();
 			for(var i in result){
 				var uInfo = result[i];
 				if(user.userId!=uInfo.userId){
