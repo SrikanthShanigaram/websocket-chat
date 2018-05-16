@@ -27,11 +27,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/css/**", "/js/**", "/image/**", "/register").permitAll()// anyone can
+			.antMatchers("/css/**", "/js/**", "/image/**", "/register","/status").permitAll()// anyone can
 			.anyRequest().authenticated()// any other request just need authentication
 			.and()
 			.formLogin().loginPage("/login").permitAll()
 			.defaultSuccessUrl("/")
+			.failureHandler(new FailureLoginHandler())
             .permitAll()
             .and()
             .logout();// enable form login
@@ -54,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userDetailsService);
 		auth.setPasswordEncoder(passwordEncoder());
+		auth.setHideUserNotFoundExceptions(false) ;
 		return auth;
 	}
 /*	@Bean

@@ -2,6 +2,7 @@ package com.chat.websocketchat.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chat.websocketchat.model.Role;
 import com.chat.websocketchat.model.User;
 import com.chat.websocketchat.service.UserService;
 
@@ -30,6 +32,14 @@ public class UserController {
 
         return "login";
 	}
+	@GetMapping("/status")
+	public String status(Model model, String error, String logout) {
+		if (error != null)
+            model.addAttribute("error", error);
+
+
+        return "status";
+	}
 	@GetMapping("/register")
 	public ModelAndView register(ModelAndView modelAndView, User user) {
 		modelAndView.addObject("user", user);
@@ -43,7 +53,12 @@ public class UserController {
 		System.out.println(modelAndView);
 		System.out.println(bindingResult);
 		// Lookup user in database by e-mail
-		User userExists = userService.getUser(user.getUserName()).get();
+		user = new User();
+		user.setUserName(request.getParameter("userName"));
+		user.setPassword(request.getParameter("password"));
+		user.setUserId(RandomUtils.nextInt()+"");
+		user.setRole(Role.USER);
+		User userExists = userService.getUser(user.getUserName()).orElse(null);
 		
 		System.out.println(userExists);
 		
