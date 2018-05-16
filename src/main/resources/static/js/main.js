@@ -66,7 +66,7 @@ function sendMessage(event) {
             user: user,
             content: messageInput.value,
             type: 'CHAT',
-            messageDate:new Date()
+            messageDate:new Date().toLocaleString()
         };
         stompClient.send("/topic/"+$('.selected').attr('id'), {}, JSON.stringify(chatMessage));
         messageInput.value = '';

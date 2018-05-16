@@ -51,7 +51,7 @@ function formatTime(){
 	    for (var i in elements) {
 	        var $this = elements[i];
 	        if (typeof $this === 'object') {
-	            $this.innerHTML = timer($this.getAttribute('title') || $this.getAttribute('datetime'));
+	            $this.innerHTML = timer($this.getAttribute('datetime'));
 	        }
 	    }
 }
