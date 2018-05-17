@@ -25,7 +25,12 @@
                  <div class="form-group">
                     <input type="password" id="password" name="password" placeholder="Password" class="form-control" />
                 </div>
-                <span>${errorMsg}</span>
+                <c:if test="${not empty errorMsg}">
+    				<div class="alert">
+  						<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  						<strong>Danger!</strong> ${errorMsg}
+					</div>
+				</c:if>
                 <div class="form-group">
                     <button type="submit" class="accent username-submit">Login</button>
                     <a href="/register">Register</a>

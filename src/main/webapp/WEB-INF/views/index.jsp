@@ -50,7 +50,7 @@
     <script type="text/javascript" src="/js/emojipicker.js"></script>
     <script type="text/javascript" src="/js/emojis.js"></script>
     <script>
-    var user = new User(${user.id},${user.userName});
+    var user = new User(${user.id},'${user.userName}');
     console.log(user);
     </script>
   </body>

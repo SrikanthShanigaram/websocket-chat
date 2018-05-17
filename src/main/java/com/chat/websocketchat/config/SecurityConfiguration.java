@@ -32,8 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated()// any other request just need authentication
 			.and()
 			.formLogin().loginPage("/login").permitAll()
-			.defaultSuccessUrl("/")
-			.failureHandler(new FailureLoginHandler())
+			.defaultSuccessUrl("/index")
+//			.failureHandler(new FailureLoginHandler())
             .permitAll()
             .and()
             .logout();// enable form login

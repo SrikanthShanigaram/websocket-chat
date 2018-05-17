@@ -60,16 +60,16 @@ public class UserController {
 		System.out.println(userExists);
 		
 		if (userExists != null) {
-			modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
+			modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the user name provided.");
 			modelAndView.setViewName("register");
-			bindingResult.reject("email");
+			bindingResult.reject("username");
 		}
 			
 		if (bindingResult.hasErrors()) { 
 			modelAndView.setViewName("register");		
 		} else { 
 		    userService.saveUser(user);
-			modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + user.getUserName());
+			modelAndView.addObject("confirmationMessage", user.getUserName()+" created successfully");
 			modelAndView.setViewName("register");
 		}
 		return modelAndView;

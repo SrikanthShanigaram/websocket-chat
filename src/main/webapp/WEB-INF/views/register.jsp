@@ -30,9 +30,22 @@
 					<input type="text" name="password"
 						placeholder="Password" autocomplete="off" class="form-control" />
 				</div>
+				<c:if test="${not empty alreadyRegisteredMessage}">
+    				<div class="alert">
+  						<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  						<strong>Danger!</strong> ${alreadyRegisteredMessage}
+					</div>
+				</c:if>
+				<c:if test="${not empty confirmationMessage}">
+    				<div class="success">
+  						<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  						<strong>Success!</strong> ${confirmationMessage}
+					</div>
+				</c:if>
 				<div class="form-group">
 					<button type="submit" class="accent username-submit">Create
 						Account</button>
+					<a href="/login">Login</a>
 				</div>
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />

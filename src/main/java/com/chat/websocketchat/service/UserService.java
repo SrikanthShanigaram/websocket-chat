@@ -14,7 +14,6 @@ public class UserService {
 	private UserRepository repository;
 
 	public Optional<User> getUser(String userName) {
-		System.out.println("inside user service[repository] "+userName);
 		return Optional.ofNullable(repository.findByUserName(userName));
 	}
 	

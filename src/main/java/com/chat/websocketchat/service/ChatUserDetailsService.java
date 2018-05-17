@@ -1,7 +1,6 @@
 package com.chat.websocketchat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,11 +19,6 @@ public class ChatUserDetailsService implements UserDetailsService {
     	User user = userService.getUser(userName)
     			.orElseThrow(() -> new UsernameNotFoundException(String.format("User with userName=%s was not found", userName)));
         return new UserDetail(user);
-    	/*org.springframework.security.core.userdetails.User u=  new org.springframework.security.core.userdetails.User(
-    	        user.getUserName(), 
-    	        user.getPassword(), // shall to be the already BCrypt-encrypted password
-    	        AuthorityUtils.createAuthorityList(user.getRole().toString()));
-    	return u;*/
     }
 
 }
