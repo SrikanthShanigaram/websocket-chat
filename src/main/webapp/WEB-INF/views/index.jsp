@@ -17,7 +17,7 @@
     <div id="chat-page">
         <div class="chat-container">
             <div class="chat-header">
-                <h2>${user.userName}</h2>
+                <h2><span>${user.userName}</span><a href="/logout" style="float: right">Logout</a></h2>
             </div>
             <div class="connecting">
                 Connecting...
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <div class="input-group clearfix">
                         <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary">Send</button>
+                        <button id="messageSend" type="button" class="primary">Send</button>
                     </div>
                 </div>
             </form>
@@ -50,8 +50,11 @@
     <script type="text/javascript" src="/js/emojipicker.js"></script>
     <script type="text/javascript" src="/js/emojis.js"></script>
     <script>
-    var user = new User(${user.id},'${user.userName}');
-    console.log(user);
+    $("document").ready(function () {
+	    var chatJs = new ChatJs({
+	    	user : new User(${user.id},'${user.userName}')
+	    });
+    });
     </script>
   </body>
 </html>

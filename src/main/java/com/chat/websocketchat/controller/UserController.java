@@ -74,7 +74,7 @@ public class UserController {
 		}
 		return modelAndView;
 	}
-	@GetMapping("/index")
+	@GetMapping(value= {"/*","/index"})
 	public String index() {
 		return "index";
 	}
