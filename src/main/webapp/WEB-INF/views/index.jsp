@@ -10,9 +10,21 @@
       <link rel="stylesheet" href="/css/emojiPicker.css">
       <!-- Emoji Data -->
 	  <link rel="stylesheet" href="/css/emojipicker.g.css">
+	  <style>
+    .view-height{
+    	height: 75vh;
+    }
+    .left-nav {
+    background-color: #77bb7d24;
+	}
+	
+	.col-8.right-nav {
+	    background-color: #dbc7f1ab;
+	}
+    </style>
   </head>
   <body>
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -39,14 +51,14 @@
 	    </div>
 </nav>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-4">
+	<div class="container" style="margin-top: 55px">
+		<div class="row view-height">
+			<div class="col-4 left-nav">
 				<ul id="userArea">
 					<li class="loader"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></li>
             	</ul>
 			</div>
-			<div class="col-8">
+			<div class="col-8 right-nav">
 				<div class="chat-container">
 					<div class="connecting">Connecting...</div>
 
