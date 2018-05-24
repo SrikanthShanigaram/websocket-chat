@@ -28,7 +28,7 @@
                 <c:if test="${not empty errorMsg}">
     				<div class="alert">
   						<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-  						<strong>Danger!</strong> ${errorMsg}
+  						${errorMsg}
 					</div>
 				</c:if>
                 <div class="form-group">

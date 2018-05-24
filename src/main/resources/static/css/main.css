@@ -157,7 +157,7 @@ button.accent {
     padding: 0 20px 0px 20px;
     height: calc(100% - 150px);
 }
-#chat-page #messageArea{
+#chat-page .messageArea{
 	background-image: url('/image/background-image.png');
 }
 #chat-page #messageForm {

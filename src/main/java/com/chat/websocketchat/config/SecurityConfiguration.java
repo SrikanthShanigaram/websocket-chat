@@ -19,11 +19,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-//@EnableWebMvc
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-//	@Qualifier("chatUserDetailsService")
 	private UserDetailsService userDetailsService;
 
 	@Override
@@ -40,10 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 	}
 
-	/*@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);//.passwordEncoder(new BCryptPasswordEncoder());
-	}*/
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
@@ -60,11 +54,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.setHideUserNotFoundExceptions(false) ;
 		return auth;
 	}
-/*	@Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-       return userDetailsService;
-    }*/
 
 	@Bean
 	public ViewResolver viewResolver() {

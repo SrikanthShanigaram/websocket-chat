@@ -33,7 +33,7 @@
 				<c:if test="${not empty alreadyRegisteredMessage}">
     				<div class="alert">
   						<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-  						<strong>Danger!</strong> ${alreadyRegisteredMessage}
+  						${alreadyRegisteredMessage}
 					</div>
 				</c:if>
 				<c:if test="${not empty confirmationMessage}">

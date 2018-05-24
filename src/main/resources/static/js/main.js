@@ -2,7 +2,6 @@ function ChatJs(config){
 	this.config = $.extend(true, config, {});
 	var messageForm = document.querySelector('#messageForm');
 	var messageInput = document.querySelector('#message');
-	var messageArea = document.querySelector('#messageArea');
 	var connectingElement = document.querySelector('.connecting');
 	this.stompClient = null;
 	var scope = this;
@@ -25,6 +24,12 @@ function ChatJs(config){
 					if (Notification.permission !== "granted")
 						Notification.requestPermission();
 				});
+		$('#message').keyup(function(e){
+		    if(e.keyCode == 13){
+		    	scope.sendMessage();
+		    }
+	    	e.preventDefault();
+		});
 	}
 	this.connect = function(){
         var socket = new SockJS('/ws');
@@ -38,7 +43,6 @@ function ChatJs(config){
 			  top : '0px'
 		});
 
-		console.log(user);
 	    // Subscribe to the Public Topic
 	    stompClient.subscribe('/topic/'+user.userId, scope.onMessageReceived);
 	    stompClient.subscribe('/topic/public', scope.onMessageReceived);
@@ -56,24 +60,33 @@ function ChatJs(config){
 	}
 	this.onMessageReceived = function(payload){
 		var message = JSON.parse(payload.body);
-		scope.processMessage(message);
+		scope.processMessage(message,false);
 	}
-	this.processMessage = function(message){
+	this.processMessage = function(message,isFromSender){
 		var messageElement = document.createElement('li');
-	    var currentUserId =  user.userId;
 	    var messageUserId = message.user.userId;
 	    var messageUserName = message.user.userName;
+	    if(isFromSender){
+	    	messageUserId = $('.selected').attr('id');
+	    	messageUserName = $('.selected').text();
+	    }
+	    var messageArea = document.getElementById(messageUserId+"_chat");
+	    if(messageArea==null){
+	    	$('#userArea').after('<ul id="'+messageUserId+'_chat" class="messageArea" style="display:none"></ul>');
+	    	messageArea = document.getElementById(messageUserId+"_chat");
+	    }
+	    
 	    if(message.type === 'JOIN') {
 	        messageElement.classList.add('event-message');
 	        message.content = messageUserName + ' joined!';
-	        if(currentUserId!=messageUserId){
+	        if(!isFromSender&&messageUserId!=user.userId){
 	        	scope.notifyMe(message.content,'',messageUserName);
 	        }
 	        scope.fillUsers();
 	    } else if (message.type === 'LEAVE') {
 	        messageElement.classList.add('event-message');
 	        message.content = messageUserName + ' left!';
-	        if(currentUserId!=messageUserId){
+	        if(!isFromSender){
 	        	scope.notifyMe(message.content,'',messageUserName);
 	        }
 	        $('#'+messageUserId).remove();
@@ -88,11 +101,11 @@ function ChatJs(config){
 	        messageElement.appendChild(avatarElement);
 
 	        var usernameElement = document.createElement('span');
-	        var usernameText = document.createTextNode(currentUserId==messageUserId?'You':messageUserName);
+	        var usernameText = document.createTextNode(isFromSender?'You':messageUserName);
 	        usernameElement.appendChild(usernameText);
 	        messageElement.appendChild(usernameElement);
-	        messageElement.classList.add(currentUserId==messageUserId?'me':'other');
-	        if(currentUserId!=messageUserId){
+	        messageElement.classList.add(isFromSender?'me':'other');
+	        if(!isFromSender){
 	        	scope.notifyMe('You have a message from '+messageUserName,message.content,messageUserName);
 	        }
 	    }
@@ -113,7 +126,6 @@ function ChatJs(config){
 	}
 	this.sendMessage = function(){
 		if($('.selected').length==0){
-			event.preventDefault();
 			return;
 		}
 	    var messageContent = messageInput.value.trim();
@@ -126,9 +138,8 @@ function ChatJs(config){
 	        };
 	        stompClient.send("/topic/"+$('.selected').attr('id'), {}, JSON.stringify(chatMessage));
 	        messageInput.value = '';
-	        scope.processMessage(chatMessage);
+	        scope.processMessage(chatMessage,true);
 	    }
-	    event.preventDefault();
 	}
 	this.getAvatarColor = function(messageSender) {
 	    var hash = 0;
@@ -197,9 +208,16 @@ function ChatJs(config){
 			}
 		});
 	}
-	this.selectAndSubscribe = function(){
+	this.selectAndSubscribe = function(e){
 		$("#userArea li").removeClass('selected');
 	    $(this).addClass('selected');
+	    var messageArea = document.getElementById(this.id+"_chat");
+	    console.log(messageArea);
+	    if(messageArea==null){
+	    	$('#userArea').after('<ul id="'+this.id+'_chat" class="messageArea"></ul>');
+	    }
+	    $('.messageArea').hide();
+	    $('#'+this.id+"_chat").show();
 	}
 	this.init();
 }

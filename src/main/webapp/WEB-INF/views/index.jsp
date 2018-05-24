@@ -11,9 +11,6 @@
 	  <link rel="stylesheet" href="/css/emojipicker.g.css">
   </head>
   <body>
-    <noscript>
-      <h2>Sorry! Your browser doesn't support Javascript</h2>
-    </noscript>
     <div id="chat-page">
         <div class="chat-container">
             <div class="chat-header">
@@ -25,10 +22,7 @@
             <ul id="userArea">
 				<li class="loader"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></li>
             </ul>
-            <ul id="messageArea">
-
-            </ul>
-            <form id="messageForm" name="messageForm">
+            <form id="messageForm" name="messageForm" onsubmit="return false;">
                 <div class="form-group">
                     <div class="input-group clearfix">
                         <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
