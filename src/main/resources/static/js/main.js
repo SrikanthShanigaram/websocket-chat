@@ -72,10 +72,9 @@ function ChatJs(config){
 	    }
 	    var messageArea = document.getElementById(messageUserId+"_chat");
 	    if(messageArea==null){
-	    	$('#userArea').after('<ul id="'+messageUserId+'_chat" class="messageArea" style="display:none"></ul>');
+	    	$('.connecting').after('<ul id="'+messageUserId+'_chat" class="messageArea" style="display:none"></ul>');
 	    	messageArea = document.getElementById(messageUserId+"_chat");
 	    }
-	    
 	    if(message.type === 'JOIN') {
 	        messageElement.classList.add('event-message');
 	        message.content = messageUserName + ' joined!';
@@ -214,7 +213,7 @@ function ChatJs(config){
 	    var messageArea = document.getElementById(this.id+"_chat");
 	    console.log(messageArea);
 	    if(messageArea==null){
-	    	$('#userArea').after('<ul id="'+this.id+'_chat" class="messageArea"></ul>');
+	    	$('.connecting').after('<ul id="'+this.id+'_chat" class="messageArea"></ul>');
 	    }
 	    $('.messageArea').hide();
 	    $('#'+this.id+"_chat").show();

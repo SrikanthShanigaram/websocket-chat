@@ -1,0 +1,30 @@
+.hidden {
+	display: none;
+}
+
+.view-height {
+	height: 75vh;
+}
+
+.left-nav {
+	background-color: #77bb7d24;
+}
+
+.col-8.right-nav {
+	background-color: #dbc7f1ab;
+}
+
+.container {
+	max-width: 100% !important;
+}
+#chat-page .event-message {
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#chat-page .event-message p {
+    color: #777;
+    font-size: 14px;
+    word-wrap: break-word;
+}
