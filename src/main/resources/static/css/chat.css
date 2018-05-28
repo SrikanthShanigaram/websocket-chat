@@ -3,7 +3,7 @@
 }
 
 .view-height {
-	height: 75vh;
+	height: 90vh;
 }
 
 .left-nav {
@@ -27,4 +27,136 @@
     color: #777;
     font-size: 14px;
     word-wrap: break-word;
+}
+.chat-container {
+    height: 88%;
+}
+.messageArea {
+    height: 100%;
+    overflow: auto;
+    list-style: none;
+    padding: 20px !important;
+}
+
+#userArea li {
+    cursor: pointer;
+}
+.selected {
+    background-color: #97c1e2;
+    position:relative;
+}
+.selected:after{
+	border: solid 10px transparent;
+    border-right-color: #fff;
+    position: absolute;
+    margin: -85px 0 0 -20px;
+}
+.selected .arrow {
+    position: absolute;
+    right: -22px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent #97c1e2;
+}
+#userArea {
+    margin-top: 5px;
+}
+span.time {
+    float: right;
+    font-weight: normal !important;
+}
+li.chat-message.me {
+    background-color: #dcf8c6;
+}
+li.chat-message.other{
+	background-color: #fff;
+}
+#chat-page ul li {
+    margin: 5px;
+}
+li.chat-message.me:after,li.chat-message.other:after {
+    content: ' ';
+    position: absolute;
+    top: 0px;
+    border: 22px solid;
+    border-top-color: currentcolor;
+    border-right-color: currentcolor;
+    border-bottom-color: currentcolor;
+    border-left-color: currentcolor;
+}
+li.chat-message.me:after{
+    left: -22px;
+    right: auto;
+    border-color: #dcf8c6 transparent transparent transparent;
+    border-right-width: 0;
+}
+li.chat-message.other:after {
+    right: -22px;
+    left: auto;
+    border-color: #ffffff transparent transparent transparent;
+    border-left-width: 0;
+}
+
+/* Loader animation */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+  background: black;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: #008000;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: blueviolet;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+  background: blue;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+.messageArea li {
+    position: relative;
 }

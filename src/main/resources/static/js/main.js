@@ -37,11 +37,11 @@ function ChatJs(config){
         stompClient.connect({}, this.onConnected, this.onError);
 	}
 	this.onConnected = function(){
-		$('#message').emojiPicker({
+		/*$('#message').emojiPicker({
 			  height: '300px',
 			  width:  '450px',
 			  top : '0px'
-		});
+		});*/
 
 	    // Subscribe to the Public Topic
 	    stompClient.subscribe('/topic/'+user.userId, scope.onMessageReceived);
@@ -201,7 +201,7 @@ function ChatJs(config){
 				for(var i in result){
 					var uInfo = result[i];
 					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+'>'+uInfo.userName+'<span class="mark"></span></li>');
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item">'+uInfo.userName+'<span class="arrow"></span></li>');
 					}
 				}
 			}

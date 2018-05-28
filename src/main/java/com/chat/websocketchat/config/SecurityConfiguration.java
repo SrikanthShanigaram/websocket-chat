@@ -27,11 +27,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/css/**", "/js/**", "/image/**", "/register","/status").permitAll()// anyone can
+			.antMatchers("/css/**", "/js/**", "/image/**", "/register","/status").permitAll()// anyone can access
 			.anyRequest().authenticated()// any other request just need authentication
 			.and()
-			.formLogin().loginPage("/login").permitAll()
-			.defaultSuccessUrl("/index")
+			.formLogin().loginPage("/login").permitAll() //Custom Login Form
+			.defaultSuccessUrl("/index") //Default Login success url
 //			.failureHandler(new FailureLoginHandler())
             .permitAll()
             .and()

@@ -43,7 +43,7 @@
 	<div class="container" style="margin-top: 55px">
 		<div class="row view-height">
 			<div class="col-4 left-nav">
-				<ul id="userArea">
+				<ul id="userArea" class="list-group">
 					<li class="loader"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></li>
             	</ul>
 			</div>
@@ -54,12 +54,12 @@
 					<ul id="messageArea">
 
 					</ul>
-					<form id="messageForm" name="messageForm">
+					<form id="messageForm" name="messageForm" onsubmit="return false;">
 						<div class="form-group">
 							<div class="input-group clearfix">
 								<input type="text" id="message" placeholder="Type a message..."
 									autocomplete="off" class="form-control" />
-								<button id="messageSend" type="button" class="primary">Send</button>
+								<button id="messageSend" type="button" class="btn btn-primary">Send</button>
 							</div>
 						</div>
 					</form>
