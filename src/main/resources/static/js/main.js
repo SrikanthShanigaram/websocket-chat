@@ -64,6 +64,11 @@ function ChatJs(config){
 	}
 	this.processMessage = function(message,isFromSender){
 		var messageElement = document.createElement('li');
+		var msgElement = document.createElement('div');
+		msgElement.classList.add("chat-text");
+		var infoElement = document.createElement('div');
+		infoElement.classList.add("chat-info");
+		
 	    var messageUserId = message.user.userId;
 	    var messageUserName = message.user.userName;
 	    if(isFromSender){
@@ -97,12 +102,12 @@ function ChatJs(config){
 	        avatarElement.appendChild(avatarText);
 	        avatarElement.style['background-color'] = scope.getAvatarColor(messageUserName);
 
-	        messageElement.appendChild(avatarElement);
+	        infoElement.appendChild(avatarElement);
 
-	        var usernameElement = document.createElement('span');
+	        /*var usernameElement = document.createElement('span');
 	        var usernameText = document.createTextNode(isFromSender?'You':messageUserName);
 	        usernameElement.appendChild(usernameText);
-	        messageElement.appendChild(usernameElement);
+	        messageElement.appendChild(usernameElement);*/
 	        messageElement.classList.add(isFromSender?'me':'other');
 	        if(!isFromSender){
 	        	scope.notifyMe('You have a message from '+messageUserName,message.content,messageUserName);
@@ -111,13 +116,15 @@ function ChatJs(config){
 	    var timerElement = document.createElement('span');
 	    timerElement.classList.add('time');
 	    timerElement.setAttribute("datetime", message.messageDate);
-	    messageElement.appendChild(timerElement);
+	    infoElement.appendChild(timerElement);
 	    
 	    var textElement = document.createElement('p');
 	    var messageText = document.createTextNode(message.content);
 	    textElement.appendChild(messageText);
+	    msgElement.appendChild(textElement);
 
-	    messageElement.appendChild(textElement);
+	    messageElement.appendChild(msgElement);
+	    messageElement.appendChild(infoElement);
 
 	    messageArea.appendChild(messageElement);
 	    messageArea.scrollTop = messageArea.scrollHeight;
@@ -201,7 +208,7 @@ function ChatJs(config){
 				for(var i in result){
 					var uInfo = result[i];
 					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item">'+uInfo.userName+'<span class="arrow"></span></li>');
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center">'+uInfo.userName+'<span class="badge badge-primary badge-pill">0</span></li>');
 					}
 				}
 			}
