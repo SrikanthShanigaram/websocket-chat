@@ -29,9 +29,15 @@
 	<div class="container">
 		<div class="row view-height">
 			<div class="col-4 left-nav">
-				<div class="btn-group">
-					<input id="searchinput" type="search" class="form-control" placeholder="Search users">
-					<span id="searchclear" class="fa fa-times-circle"></span>
+				<div class="input-group chat-user-search">
+					<input class="form-control py-2 border-right-0 border"
+						type="search" id="searchInput" placeholder="Search user by name"> <span
+						class="input-group-append">
+						<button class="btn btn-outline-secondary border-left-0 border"
+							type="button">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
 				</div>
 				<ul id="userArea" class="list-group list-group-flush">
 					<li class="loader"><div class="lds-ellipsis">

@@ -13,6 +13,7 @@ body {
 .left-nav {
 	background-color: #F6F7F9;
 	padding: 0;
+	padding-top: 5px;
 }
 
 .container {
@@ -51,9 +52,10 @@ body {
 
 #userArea li {
 	cursor: pointer;
+	background: transparent;
 }
 
-.selected {
+#userArea li.selected {
 	background-color: #97c1e2;
 	position: relative;
 }
@@ -162,12 +164,16 @@ keyframes lds-ellipsis1 { 0% {
 100%
 {
 transform
-:
- 
-scale
-(1);
 
-  
+
+:
+
+ 
+
+scale
+
+
+(1);
 }
 }
 @
@@ -178,12 +184,16 @@ keyframes lds-ellipsis3 { 0% {
 100%
 {
 transform
-:
- 
-scale
-(0);
 
-  
+
+:
+
+ 
+
+scale
+
+
+(0);
 }
 }
 @
@@ -194,10 +204,17 @@ keyframes lds-ellipsis2 { 0% {
 100%
 {
 transform
+
+
 :
+
  
+
 translate
-(19px
+
+
+(19
+px
 ,
 0);
 }
@@ -295,7 +312,8 @@ span.time {
 }
 
 .other .chat-text:before {
-	content: " "; border-width : 16px;
+	content: " ";
+	border-width: 16px;
 	border-color: #eadbc4 transparent transparent transparent;
 	border-style: solid;
 	border-left-width: 0;
@@ -319,4 +337,40 @@ li.event-message {
  .chat-text {
 	float: left;
 	margin-right: 16px;
+}
+
+.avatar {
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.user-title {
+	padding-left: 8px;
+	font-weight: 600;
+}
+input#searchInput {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+input#searchInput:focus{
+    border-color: #cccccc;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.left-nav .input-group {
+    width: 85%;
+    margin: 0 auto;
+}
+.chat-user-search .input-group-append {
+    background-color: #fff;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-left: -5px;
+}
+
+button.btn.btn-outline-secondary.border-left-0.border {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
 }

@@ -208,7 +208,7 @@ function ChatJs(config){
 				for(var i in result){
 					var uInfo = result[i];
 					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center">'+uInfo.userName+'<span class="badge badge-primary badge-pill">0</span></li>');
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 					}
 				}
 			}
