@@ -51,6 +51,9 @@
 			<div class="col-6 middle-nav">
 				<div class="chat-container">
 					<div class="connecting">Connecting...</div>
+					<div id="message-content">
+					</div>
+					<div class="messageform-actions">
 					<form id="messageForm" name="messageForm" onsubmit="return false;">
 						<div class="form-group">
 							<div class="input-chat">
@@ -62,6 +65,7 @@
 							</div>
 						</div>
 					</form>
+					</div>
 				</div>
 			</div>
 			<div class="col-2 right-nav">

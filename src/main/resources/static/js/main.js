@@ -12,7 +12,7 @@ function ChatJs(config){
 	];
 	this.init = function(){
 		$('#messageSend').click(this.sendMessage);
-		$('#userArea').on('click','li',this.selectAndSubscribe);
+		$('#userArea').on('click','li',this.selectUserChat);
 		this.connect();
 		document.addEventListener(
 				'DOMContentLoaded',
@@ -77,7 +77,7 @@ function ChatJs(config){
 	    }
 	    var messageArea = document.getElementById(messageUserId+"_chat");
 	    if(messageArea==null){
-	    	$('.connecting').after('<ul id="'+messageUserId+'_chat" class="messageArea" style="display:none"></ul>');
+	    	$('#message-content').append('<ul id="'+messageUserId+'_chat" class="messageArea" style="display:none"></ul>');
 	    	messageArea = document.getElementById(messageUserId+"_chat");
 	    }
 	    if(message.type === 'JOIN') {
@@ -85,8 +85,11 @@ function ChatJs(config){
 	        message.content = messageUserName + ' joined!';
 	        if(!isFromSender&&messageUserId!=user.userId){
 	        	scope.notifyMe(message.content,'',messageUserName);
+	        	$('#userArea').append('<li id='+user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+	        }else{
+	        	scope.fillUsers();
 	        }
-	        scope.fillUsers();
+	        
 	    } else if (message.type === 'LEAVE') {
 	        messageElement.classList.add('event-message');
 	        message.content = messageUserName + ' left!';
@@ -94,20 +97,24 @@ function ChatJs(config){
 	        	scope.notifyMe(message.content,'',messageUserName);
 	        }
 	        $('#'+messageUserId).remove();
+	        alert(messageUserId);
 	    } else {
 	        messageElement.classList.add('chat-message');
 
-	        var avatarElement = document.createElement('i');
+	        /*var avatarElement = document.createElement('i');
 	        var avatarText = document.createTextNode(messageUserName[0]);
 	        avatarElement.appendChild(avatarText);
 	        avatarElement.style['background-color'] = scope.getAvatarColor(messageUserName);
 
-	        infoElement.appendChild(avatarElement);
-
-	        /*var usernameElement = document.createElement('span');
-	        var usernameText = document.createTextNode(isFromSender?'You':messageUserName);
-	        usernameElement.appendChild(usernameText);
-	        messageElement.appendChild(usernameElement);*/
+	        infoElement.appendChild(avatarElement);*/
+	        
+	        var avatarImage = document.createElement("img");
+	        avatarImage.setAttribute('src', '/image/male_avatar.png');
+	        avatarImage.setAttribute('alt', 'Avatar');
+	        avatarImage.classList.add("avatar");
+	        infoElement.appendChild(avatarImage);
+	        
+	        
 	        messageElement.classList.add(isFromSender?'me':'other');
 	        if(!isFromSender){
 	        	scope.notifyMe('You have a message from '+messageUserName,message.content,messageUserName);
@@ -207,23 +214,27 @@ function ChatJs(config){
 				$('#userArea').children().remove();
 				for(var i in result){
 					var uInfo = result[i];
-					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
-					}
+					$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 				}
+				scope.selectFirstUser();
 			}
 		});
 	}
-	this.selectAndSubscribe = function(e){
+	this.selectUserChat = function(e){
 		$("#userArea li").removeClass('selected');
 	    $(this).addClass('selected');
 	    var messageArea = document.getElementById(this.id+"_chat");
 	    console.log(messageArea);
 	    if(messageArea==null){
-	    	$('.connecting').after('<ul id="'+this.id+'_chat" class="messageArea"></ul>');
+	    	$('#message-content').append('<ul id="'+this.id+'_chat" class="messageArea"></ul>');
 	    }
 	    $('.messageArea').hide();
 	    $('#'+this.id+"_chat").show();
+	}
+	this.selectFirstUser = function(){
+		if($("#userArea li.selected").length==0&&$("#userArea li").length>0){
+			$("#userArea li:first").click();
+		}
 	}
 	this.init();
 }
