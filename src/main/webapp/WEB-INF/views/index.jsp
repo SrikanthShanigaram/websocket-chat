@@ -16,16 +16,6 @@
 <link href="/css/fontAwesome.css" rel="stylesheet">
 </head>
 <body>
-	<%-- <div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button"
-			id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-			aria-expanded="false">${user.userName}</button>
-		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="#">Edit User</a>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="/logout">Sign out</a>
-		</div>
-	</div> --%>
 	<div class="container">
 		<div class="row view-height">
 			<div class="col-4 left-nav">
@@ -69,8 +59,16 @@
 				</div>
 			</div>
 			<div class="col-2 right-nav">
-				<a href="/logout" style="float: right;"><i
-					class="fa fa-sign-out-alt"></i>Sign out</a>
+				<div class="dropdown">
+					<button class="btn btn-link dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false" style="text-decoration: none;float: right;"><i class="fa fa-user"></i>${user.userName}</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Edit User</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out-alt"></i>Sign out</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -85,6 +83,7 @@
 	<script src="/js/user.js"></script>
 	<script type="text/javascript" src="/js/emojipicker.js"></script>
 	<script type="text/javascript" src="/js/emojis.js"></script>
+	<script src="/js/proper.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script>
     $("document").ready(function () {

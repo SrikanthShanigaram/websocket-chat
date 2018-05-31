@@ -85,7 +85,7 @@ function ChatJs(config){
 	        message.content = messageUserName + ' joined!';
 	        if(!isFromSender&&messageUserId!=user.userId){
 	        	scope.notifyMe(message.content,'',messageUserName);
-	        	$('#userArea').append('<li id='+user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+	        	$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 	        }else{
 	        	scope.fillUsers();
 	        }
@@ -97,7 +97,9 @@ function ChatJs(config){
 	        	scope.notifyMe(message.content,'',messageUserName);
 	        }
 	        $('#'+messageUserId).remove();
-	        alert(messageUserId);
+	        console.log(user,"user");
+	        console.log(message.user,"message.user");
+	        console.log(messageUserId,"messageUserId");
 	    } else {
 	        messageElement.classList.add('chat-message');
 
@@ -214,7 +216,9 @@ function ChatJs(config){
 				$('#userArea').children().remove();
 				for(var i in result){
 					var uInfo = result[i];
-					$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+					if(user.userId!=uInfo.userId){
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+					}
 				}
 				scope.selectFirstUser();
 			}
