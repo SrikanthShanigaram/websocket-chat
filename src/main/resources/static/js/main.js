@@ -13,6 +13,7 @@ function ChatJs(config){
 	this.init = function(){
 		$('#messageSend').click(this.sendMessage);
 		$('#userArea').on('click','li',this.selectUserChat);
+		$('#message-content').on('click','.messageArea',this.readCount);
 		this.connect();
 		document.addEventListener(
 				'DOMContentLoaded',
@@ -121,6 +122,7 @@ function ChatJs(config){
 	        if(!isFromSender){
 	        	scope.notifyMe('You have a message from '+messageUserName,message.content,messageUserName);
 	        }
+	        scope.updateUnreadCount(message.user);
 	    }
 	    var timerElement = document.createElement('span');
 	    timerElement.classList.add('time');
@@ -138,6 +140,20 @@ function ChatJs(config){
 	    messageArea.appendChild(messageElement);
 	    messageArea.scrollTop = messageArea.scrollHeight;
 	    formatTime();
+	}
+	this.updateUnreadCount = function(mUser){
+		if($('#'+mUser.userId+'.selected').length==0){
+			return;
+		}
+		var unreadCount = Number($('#'+mUser.userId+' .badge').text())+1;
+		$('#'+mUser.userId+' .badge').text(unreadCount);
+	}
+	this.clearReadCount = function(userId){
+		$('#'+userId+' .badge').text(0);
+	}
+	this.readCount = function(){
+		var selectedChatId = this.id;
+		scope.clearReadCount(selectedChatId.substring(0, selectedChatId.indexOf('_')));
 	}
 	this.sendMessage = function(){
 		if($('.selected').length==0){
@@ -234,11 +250,18 @@ function ChatJs(config){
 	    }
 	    $('.messageArea').hide();
 	    $('#'+this.id+"_chat").show();
+	    scope.clearReadCount(this.id);
+	    scope.showUserInfo(this.id);
 	}
 	this.selectFirstUser = function(){
 		if($("#userArea li.selected").length==0&&$("#userArea li").length>0){
 			$("#userArea li:first").click();
 		}
+	}
+	this.showUserInfo = function(userId){
+		$('.user-personal-info img').attr('src','/image/male_avatar.png');
+		$('.user-personal-info .user-name').text($('#'+userId+' .user-title').text());
+		$('.user-personal-info .user-position').text("Software Engineer");
 	}
 	this.init();
 }

@@ -69,6 +69,7 @@
 						<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out-alt"></i>Sign out</a>
 					</div>
 				</div>
+				<%@include file="/WEB-INF/views//userInfo.jsp" %>
 			</div>
 		</div>
 	</div>

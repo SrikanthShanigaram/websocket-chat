@@ -163,106 +163,31 @@ li.chat-message.other:after {
 	animation: lds-ellipsis3 0.6s infinite;
 	background: blue;
 }
-
-@
-keyframes lds-ellipsis1 { 0% {
-	transform: scale(0);
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
 }
 
-100%
-{
-transform
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-scale
-
-
-
-
-
-
-(1);
-}
-}
-@
-keyframes lds-ellipsis3 { 0% {
-	transform: scale(1);
-}
-
-100%
-{
-transform
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-scale
-
-
-
-
-
-
-(0);
-}
-}
-@
-keyframes lds-ellipsis2 { 0% {
-	transform: translate(0, 0);
-}
-
-100%
-{
-transform
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-translate
-
-
-
-
-
-
-(19
-px
-,
-0);
-}
-}
 .messageArea li {
 	position: relative;
 }
@@ -424,4 +349,19 @@ input#searchInput:focus {
 button.btn.btn-outline-secondary.border-left-0.border {
 	border-top-right-radius: 30px;
 	border-bottom-right-radius: 30px;
+}
+
+/* User Personal Details */
+.user-personal-info {
+    display: block;
+    clear: both;
+    width: 100%;
+    text-align: center;
+}
+.user-personal-info .user-name{
+	color: #5D88CD;
+	font-weight: 600;
+}
+.user-personal-info .user-position{
+	color: #B9B8BD;
 }
