@@ -31,6 +31,10 @@ function ChatJs(config){
 		    }
 	    	e.preventDefault();
 		});
+		$(document).on("click",'img', function() {
+			   $('#imagepreview').attr('src', $(this).attr('src'));
+			   $('#imagemodal').modal('show');
+		});
 	}
 	this.connect = function(){
         var socket = new SockJS('/ws');
@@ -86,7 +90,7 @@ function ChatJs(config){
 	        message.content = messageUserName + ' joined!';
 	        if(!isFromSender&&messageUserId!=user.userId){
 	        	scope.notifyMe(message.content,'',messageUserName);
-	        	$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+	        	$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/imageDisplay/'+message.user.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 	        }else{
 	        	scope.fillUsers();
 	        }
@@ -98,9 +102,6 @@ function ChatJs(config){
 	        	scope.notifyMe(message.content,'',messageUserName);
 	        }
 	        $('#'+messageUserId).remove();
-	        console.log(user,"user");
-	        console.log(message.user,"message.user");
-	        console.log(messageUserId,"messageUserId");
 	    } else {
 	        messageElement.classList.add('chat-message');
 
@@ -112,7 +113,8 @@ function ChatJs(config){
 	        infoElement.appendChild(avatarElement);*/
 	        
 	        var avatarImage = document.createElement("img");
-	        avatarImage.setAttribute('src', '/image/male_avatar.png');
+	        avatarImage.setAttribute('src', '/imageDisplay/'+message.user.userId);
+	        avatarImage.setAttribute('onerror', '/image/male_avatar.png');
 	        avatarImage.setAttribute('alt', 'Avatar');
 	        avatarImage.classList.add("avatar");
 	        infoElement.appendChild(avatarImage);
@@ -142,7 +144,7 @@ function ChatJs(config){
 	    formatTime();
 	}
 	this.updateUnreadCount = function(mUser){
-		if($('#'+mUser.userId+'.selected').length==0){
+		if($('#'+mUser.userId+'_chat').is(":visible")){
 			return;
 		}
 		var unreadCount = Number($('#'+mUser.userId+' .badge').text())+1;
@@ -233,7 +235,7 @@ function ChatJs(config){
 				for(var i in result){
 					var uInfo = result[i];
 					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/imageDisplay/'+uInfo.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 					}
 				}
 				scope.selectFirstUser();
@@ -259,7 +261,7 @@ function ChatJs(config){
 		}
 	}
 	this.showUserInfo = function(userId){
-		$('.user-personal-info img').attr('src','/image/male_avatar.png');
+		$('.user-personal-info img').attr('src','/imageDisplay/'+userId);
 		$('.user-personal-info .user-name').text($('#'+userId+' .user-title').text());
 		$('.user-personal-info .user-position').text("Software Engineer");
 	}

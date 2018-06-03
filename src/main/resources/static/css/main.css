@@ -120,7 +120,7 @@ button.accent {
     padding: 35px 55px 35px;
     min-height: 250px;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -188,20 +188,6 @@ button.accent {
         font-size: 1.1em;
     }
 }
-
-/* Emoji css */
-.emojiPickerIconWrap{
-	float: left;
-}
-.emojiPickerIcon{
-	right: auto !important;
-}
-.emojiPickerIconWrap{
-	display:block !important;
-	width:87%;
-}
-
-
 /* alerts messages */
 .success{
 	padding: 8px 10px;

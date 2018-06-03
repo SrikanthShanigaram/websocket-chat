@@ -365,3 +365,20 @@ button.btn.btn-outline-secondary.border-left-0.border {
 .user-personal-info .user-position{
 	color: #B9B8BD;
 }
+li.loader {
+    background: #ced4f1 !important;
+    text-align: center;
+}
+#imagemodal	.modal-content {
+    background: transparent !important;
+    border: none !important;
+}
+#imagemodal .modal-header {
+	border: none !important;
+}
+#imagemodal button.close {
+    color: white;
+    font-size: 40px;
+    float: right;
+}
+}

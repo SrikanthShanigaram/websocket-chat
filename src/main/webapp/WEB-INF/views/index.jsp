@@ -64,16 +64,33 @@
 						id="dropdownMenuButton" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false" style="text-decoration: none;float: right;"><i class="fa fa-user"></i>${user.userName}</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Edit User</a>
+						<a class="dropdown-item" href="/editProfile"><i class="fa fa-user-edit"></i> Edit User</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out-alt"></i>Sign out</a>
+						<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out-alt"></i> Sign out</a>
 					</div>
 				</div>
 				<%@include file="/WEB-INF/views//userInfo.jsp" %>
 			</div>
 		</div>
 	</div>
-
+	<!-- User image preview -->
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle"></i>
+        <span aria-hidden="true"></span><span class="sr-only">Close</span></button>
+<!--         <h4 class="modal-title" id="myModalLabel">Image preview</h4> -->
+      </div>
+      <div class="modal-body">
+        <img src="" id="imagepreview" style="max-width: 90%; max-height: 90%;" >
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+  </div>
+</div>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> -->
 	<script src="/js/jquery.js"></script>

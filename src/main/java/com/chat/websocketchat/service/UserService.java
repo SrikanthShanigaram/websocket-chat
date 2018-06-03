@@ -17,8 +17,15 @@ public class UserService {
 		return Optional.ofNullable(repository.findByUserName(userName));
 	}
 	
-	public void saveUser(User user) {
-		repository.save(user);
+	public User saveUser(User user) throws Exception {
+		return repository.save(user);
+	}
+	public void updateUser(User user) throws Exception {
+		repository.update(user);
+	}
+
+	public Optional<User> getUser(long userId) {
+		return Optional.ofNullable(repository.findByUserId(userId));
 	}
 	
 }

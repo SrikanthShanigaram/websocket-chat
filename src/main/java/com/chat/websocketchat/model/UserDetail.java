@@ -15,7 +15,7 @@ public class UserDetail extends org.springframework.security.core.userdetails.Us
         this.user = user;
     }
 
-    public String getId() {
+    public long getId() {
         return user.getUserId();
     }
 
@@ -25,6 +25,10 @@ public class UserDetail extends org.springframework.security.core.userdetails.Us
     
     public String getUserName() {
         return user.getUserName();
+    }
+    
+    public User getUser() {
+        return user;
     }
 
     @Override
