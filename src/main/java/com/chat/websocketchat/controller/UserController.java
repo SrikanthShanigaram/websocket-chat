@@ -5,13 +5,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -75,11 +80,9 @@ public class UserController {
 	}
 	@PostMapping("/register")
 	public ModelAndView processRegistration(@RequestParam("dp") MultipartFile file,ModelAndView modelAndView, @ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request) {
-		System.out.println("===============lll");
 		user = new User();
 		user.setUserName(request.getParameter("userName"));
 		User userExists = userService.getUser(user.getUserName()).orElse(null);
-		System.out.println(userExists+" user Exists");
 		if (userExists != null) {
 			modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the user name provided.");
 			modelAndView.setViewName("register");
@@ -90,8 +93,6 @@ public class UserController {
 			modelAndView.setViewName("register");		
 		} else {
 			try {
-//			long userId = RandomUtils.nextInt();
-//			userImageService.storeUserImage(file,userId);
 			user.setPassword(passwordEncoder.encode(request.getParameter("password")));
 			user.setUserId(customSequenceService.getNextSequence(User.class.getName()));
 			user.setRole(Role.USER);
@@ -99,7 +100,9 @@ public class UserController {
 			user.setEmail(request.getParameter("email"));
 			user.setModifiedDate(new Date());
 			user = userService.saveUser(user);
-			userImageService.storeUserImage(file,user.getUserId());
+			if(!file.isEmpty()) {
+				userImageService.storeUserImage(file,user.getUserId());
+			}
 			modelAndView.addObject("confirmationMessage", user.getUserName()+" created successfully");
 			modelAndView.setViewName("register");
 			}catch (DuplicateKeyException dke) {
@@ -176,6 +179,14 @@ public class UserController {
 		modelAndView.addObject("editUser", user);
 		modelAndView.setViewName("register");
 		return modelAndView;
+	}
+
+	@RequestMapping(value = "get-users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Map<String, Object> getUsers() {
+		Map<String, Object> jsonObject = new HashMap<>();
+		jsonObject.put("offlineUsers", userService.getAllUsers());
+		jsonObject.put("onlineUsers", ChatController.users);
+		return jsonObject;
 	}
 	
 }

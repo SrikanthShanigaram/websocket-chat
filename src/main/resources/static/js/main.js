@@ -230,12 +230,13 @@ function ChatJs(config){
 		$.ajax({
 			url:'get-users',
 			success : function(result){
+				console.log(result,"result");
 				$('.loader').remove();
 				$('#userArea').children().remove();
-				for(var i in result){
+				for(var i in result.offlineUsers){
 					var uInfo = result[i];
 					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/imageDisplay/'+uInfo.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><span class="user-badge-root"><span class="user-badge"></span><img src="/imageDisplay/'+uInfo.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"></span><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 					}
 				}
 				scope.selectFirstUser();

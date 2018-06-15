@@ -381,4 +381,21 @@ li.loader {
     font-size: 40px;
     float: right;
 }
+.user-badge:after {
+    content: " ";
+	width: 10px;
+	position: absolute;
+	height: 10px;
+	border-radius: 10px;
+}
+.user-badge-root {
+	position: relative;
+}
+.user-badge.online:after{
+	border: 1px solid #8BF233;
+	background: #8BF233;
+}
+.user-badge.offline:after{
+	border: 1px solid #f32706bf;
+	background: #f32706bf;
 }
