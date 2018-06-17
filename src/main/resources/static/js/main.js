@@ -90,7 +90,8 @@ function ChatJs(config){
 	        message.content = messageUserName + ' joined!';
 	        if(!isFromSender&&messageUserId!=user.userId){
 	        	scope.notifyMe(message.content,'',messageUserName);
-	        	$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/imageDisplay/'+message.user.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+	        	scope.updateStatus(message.user.userId,true);
+	        	//$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/imageDisplay/'+message.user.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
 	        }else{
 	        	scope.fillUsers();
 	        }
@@ -101,7 +102,8 @@ function ChatJs(config){
 	        if(!isFromSender){
 	        	scope.notifyMe(message.content,'',messageUserName);
 	        }
-	        $('#'+messageUserId).remove();
+	        scope.updateStatus(messageUserId,false);
+//	        $('#'+messageUserId).remove();
 	    } else {
 	        messageElement.classList.add('chat-message');
 
@@ -230,18 +232,31 @@ function ChatJs(config){
 		$.ajax({
 			url:'get-users',
 			success : function(result){
-				console.log(result,"result");
 				$('.loader').remove();
 				$('#userArea').children().remove();
-				for(var i in result.offlineUsers){
-					var uInfo = result[i];
+				var offlineUser = result.offlineUsers;
+				for(var index in offlineUser){
+					var uInfo = offlineUser[index];
 					if(user.userId!=uInfo.userId){
-						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><span class="user-badge-root"><span class="user-badge"></span><img src="/imageDisplay/'+uInfo.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"></span><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+						$('#userArea').append('<li id='+uInfo.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><span class="user-badge-root"><span class="user-badge offline" title="offline"></span><img src="/imageDisplay/'+uInfo.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"></span><span class="user-title">'+uInfo.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+					}
+				}
+				var onlineUsers = result.onlineUsers;
+				for(var index in onlineUsers){
+					var userInfo = onlineUsers[index];
+					if(user.userId!=userInfo.userId){
+						scope.updateStatus(userInfo.userId,true);
 					}
 				}
 				scope.selectFirstUser();
 			}
 		});
+	}
+	this.updateStatus = function(userId,isOnline){
+		var statusElmnt = $('#'+userId+' .user-badge');
+		statusElmnt.removeClass(isOnline?'offline':'online');
+		statusElmnt.addClass(isOnline?'online':'offline');
+		statusElmnt.attr('title',isOnline?'online':'offline');
 	}
 	this.selectUserChat = function(e){
 		$("#userArea li").removeClass('selected');

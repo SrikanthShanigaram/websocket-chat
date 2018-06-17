@@ -396,6 +396,6 @@ li.loader {
 	background: #8BF233;
 }
 .user-badge.offline:after{
-	border: 1px solid #f32706bf;
-	background: #f32706bf;
+	border: 1px solid #f31d3b;
+	background: #f31d3b;
 }
