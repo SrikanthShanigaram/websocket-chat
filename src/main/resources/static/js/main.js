@@ -90,8 +90,14 @@ function ChatJs(config){
 	        message.content = messageUserName + ' joined!';
 	        if(!isFromSender&&messageUserId!=user.userId){
 	        	scope.notifyMe(message.content,'',messageUserName);
-	        	scope.updateStatus(message.user.userId,true);
+	        	var mUser = document.getElementById(message.user.userId);
+	        	if(mUser==null){
+	        		$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><span class="user-badge-root"><span class="user-badge online" title="offline"></span><img src="/imageDisplay/'+message.user.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"></span><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+	        	}else{
+	        		scope.updateStatus(message.user.userId,true);
+	        	}
 	        	//$('#userArea').append('<li id='+message.user.userId+' class="list-group-item d-flex justify-content-between align-items-center"><span class="user-info"><img src="/imageDisplay/'+message.user.userId+'" onerror="/image/male_avatar.png" alt="Avatar" class="avatar"><span class="user-title">'+message.user.userName+'</span></span><span class="badge badge-primary badge-pill">0</span></li>');
+	        	
 	        }else{
 	        	scope.fillUsers();
 	        }
